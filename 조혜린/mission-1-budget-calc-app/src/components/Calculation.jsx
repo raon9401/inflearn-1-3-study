@@ -6,24 +6,44 @@ import styles from "./Calculation.module.css";
 import { useState } from "react";
 
 export default function Calculation() {
-  const [budgets, setBudgets] = useState([
-    {
-      id: 1,
-      title: "식비",
-      cost: "10000",
-    },
-    {
-      id: 2,
-      title: "간식비",
-      cost: "2400",
-    },
-  ]);
+  const [budgets, setBudgets] = useState([]);
+  const [budgetTitle, setBudgetTitle] = useState();
+  const [cost, setCost] = useState(0);
 
   const handleDelBudgetItemClick = (id) => {
     setBudgets((prev) => [...prev.filter((data) => data.id !== id)]);
   };
   const handleDelBudgetListClick = () => {
     setBudgets([]);
+  };
+  const handleBudgetSendClick = (e) => {
+    e.preventDefault();
+    const newBudget = {
+      id: new Date(),
+      title: budgetTitle,
+      cost,
+    };
+
+    setBudgets((prev) => [...prev, newBudget]);
+    setBudgetTitle("");
+    setCost(0);
+  };
+
+  const handleBudgetTitleChange = (e) => {
+    let titleVal = e.target.value;
+    setBudgetTitle(titleVal);
+  };
+  const handleCostChange = (e) => {
+    let costVal = e.target.value;
+    setCost(costVal);
+  };
+
+  const calcTotalExpens = () => {
+    let totalExpense = budgets.reduce(
+      (acc, curr) => acc + Number(curr.cost),
+      0
+    );
+    return totalExpense;
   };
 
   return (
@@ -36,10 +56,21 @@ export default function Calculation() {
           <div className={styles.inputBudget}>
             <label htmlFor="expense">지출 항목</label>
             <label htmlFor="cost">비용</label>
-            <input id="expense" type="text" placeholder="예) 식비" />
-            <input id="cost" type="number" value={0} />
+            <input
+              id="expense"
+              type="text"
+              placeholder="예) 식비"
+              onChange={handleBudgetTitleChange}
+              value={budgetTitle}
+            />
+            <input
+              id="cost"
+              type="number"
+              value={cost}
+              onChange={handleCostChange}
+            />
           </div>
-          <button className={styles.btn}>
+          <button className={styles.btn} onClick={handleBudgetSendClick}>
             제출 <IoMdSend />
           </button>
         </form>
@@ -68,7 +99,9 @@ export default function Calculation() {
         </div>
       </main>
       <footer>
-        <h2 style={{ textAlign: "end" }}>총 지출: 900원</h2>
+        <h2 style={{ textAlign: "end" }}>
+          총 지출: {`${calcTotalExpens()}원`}
+        </h2>
       </footer>
     </>
   );
