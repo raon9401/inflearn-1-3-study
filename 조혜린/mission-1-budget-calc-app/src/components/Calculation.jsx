@@ -27,8 +27,8 @@ export default function Calculation() {
     });
   };
   const handleBudgetSendClick = (e) => {
-    if (budgetTitle === "" || cost === "") return;
     e.preventDefault();
+    if (budgetTitle === "") return;
     const newBudget = {
       id: Date.now(),
       title: budgetTitle,
