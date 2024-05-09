@@ -7,8 +7,9 @@ import { useState } from "react";
 
 export default function Calculation() {
   const [budgets, setBudgets] = useState([]);
-  const [budgetTitle, setBudgetTitle] = useState();
+  const [budgetTitle, setBudgetTitle] = useState("");
   const [cost, setCost] = useState(0);
+  const [isEdit, setIsEdit] = useState({ flag: false, budgetId: null });
 
   const handleDelBudgetItemClick = (id) => {
     setBudgets((prev) => [...prev.filter((data) => data.id !== id)]);
@@ -19,7 +20,7 @@ export default function Calculation() {
   const handleBudgetSendClick = (e) => {
     e.preventDefault();
     const newBudget = {
-      id: new Date(),
+      id: Date.now(),
       title: budgetTitle,
       cost,
     };
@@ -27,6 +28,34 @@ export default function Calculation() {
     setBudgets((prev) => [...prev, newBudget]);
     setBudgetTitle("");
     setCost(0);
+  };
+  const handleEditBudgetClick = (id) => {
+    setIsEdit({ budgetId: id, flag: true });
+
+    const findBudget = budgets.find((budget) => budget.id === id);
+
+    setBudgetTitle(findBudget.title);
+    setCost(findBudget.cost);
+  };
+  const handleUpdateBudgetClick = (e) => {
+    e.preventDefault();
+
+    const findEditBudgetIndex = budgets.findIndex(
+      (budget) => budget.id === isEdit.budgetId
+    );
+
+    budgets.splice(findEditBudgetIndex, 1, {
+      id: isEdit.budgetId,
+      title: budgetTitle,
+      cost,
+    });
+
+    setBudgets([...budgets]);
+
+    // reset
+    setIsEdit({ budgetId: null, flag: false });
+    setCost(0);
+    setBudgetTitle("");
   };
 
   const handleBudgetTitleChange = (e) => {
@@ -70,9 +99,15 @@ export default function Calculation() {
               onChange={handleCostChange}
             />
           </div>
-          <button className={styles.btn} onClick={handleBudgetSendClick}>
-            제출 <IoMdSend />
-          </button>
+          {isEdit.flag ? (
+            <button className={styles.btn} onClick={handleUpdateBudgetClick}>
+              수정 <IoMdSend />
+            </button>
+          ) : (
+            <button className={styles.btn} onClick={handleBudgetSendClick}>
+              제출 <IoMdSend />
+            </button>
+          )}
         </form>
         <div>
           <ul className={styles.budgets}>
@@ -81,7 +116,10 @@ export default function Calculation() {
                 <span className={styles.budgetTitle}>{budget.title}</span>
                 <span className={styles.budgetCost}>{budget.cost}</span>
                 <div className={styles.budgetBtns}>
-                  <MdEdit className={styles.editBtn} />
+                  <MdEdit
+                    className={styles.editBtn}
+                    onClick={() => handleEditBudgetClick(budget.id)}
+                  />
                   <MdDeleteForever
                     className={styles.delBtn}
                     onClick={() => handleDelBudgetItemClick(budget.id)}
