@@ -42,7 +42,7 @@ function App() {
   };
 
   const handleTotalCost = () => {
-    return contentsList.reduce((acc, cur) => acc + cur.cost, 0);
+    return contentsList.reduce((acc, cur) => acc + Number(cur.cost), 0);
   };
 
   useEffect(() => {

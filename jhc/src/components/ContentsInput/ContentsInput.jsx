@@ -24,7 +24,7 @@ const ContentsInput = ({
           className="contents-input"
           type="number"
           value={inputCost}
-          onChange={(e) => setInputCost(Number(e.target.value))}
+          onChange={(e) => setInputCost(e.target.value)}
         />
       </div>
     </>
