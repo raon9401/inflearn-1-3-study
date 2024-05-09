@@ -22,6 +22,9 @@ export default function Calculation() {
   const handleDelBudgetItemClick = (id) => {
     setBudgets((prev) => [...prev.filter((data) => data.id !== id)]);
   };
+  const handleDelBudgetListClick = () => {
+    setBudgets([]);
+  };
 
   return (
     <>
@@ -56,7 +59,10 @@ export default function Calculation() {
               </li>
             ))}
           </ul>
-          <button className={`${styles.btn} ${styles.listDelBtn}`}>
+          <button
+            className={`${styles.btn} ${styles.listDelBtn}`}
+            onClick={handleDelBudgetListClick}
+          >
             목록 지우기 <MdDeleteForever />
           </button>
         </div>
