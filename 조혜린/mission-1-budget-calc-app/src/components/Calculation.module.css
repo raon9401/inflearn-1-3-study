@@ -44,6 +44,18 @@
   max-width: 9rem;
 }
 
+.editBtn {
+  color: #0d9276;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.delBtn {
+  color: #f23a3a;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
 .budgets {
   list-style: none;
   padding: 0;
@@ -51,6 +63,7 @@
 
 .budgets li {
   display: flex;
+  align-items: center;
   border: 1px solid black;
   border-radius: 0.2rem;
   padding: 1rem 1.5rem;

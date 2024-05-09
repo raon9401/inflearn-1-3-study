@@ -27,16 +27,16 @@ export default function Calculation() {
               <span className={styles.budgetTitle}>식비</span>
               <span className={styles.budgetCost}>1000</span>
               <div className={styles.budgetBtns}>
-                <MdEdit />
-                <MdDeleteForever />
+                <MdEdit className={styles.editBtn} />
+                <MdDeleteForever className={styles.delBtn} />
               </div>
             </li>
             <li>
               <span className={styles.budgetTitle}>교통비</span>
               <span className={styles.budgetCost}>1000</span>
               <div className={styles.budgetBtns}>
-                <MdEdit />
-                <MdDeleteForever />
+                <MdEdit className={styles.editBtn} />
+                <MdDeleteForever className={styles.delBtn} />
               </div>
             </li>
           </ul>
