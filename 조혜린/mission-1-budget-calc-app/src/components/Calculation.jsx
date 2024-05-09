@@ -1,3 +1,6 @@
+import { ToastContainer, Bounce, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { IoMdSend } from "react-icons/io";
 import { MdEdit, MdDeleteForever } from "react-icons/md";
 
@@ -13,11 +16,18 @@ export default function Calculation() {
 
   const handleDelBudgetItemClick = (id) => {
     setBudgets((prev) => [...prev.filter((data) => data.id !== id)]);
+    toast.error("아이템이 삭제되었습니다.", {
+      position: "top-right",
+    });
   };
   const handleDelBudgetListClick = () => {
     setBudgets([]);
+    toast.error("아이템이 모두 삭제되었습니다.", {
+      position: "top-right",
+    });
   };
   const handleBudgetSendClick = (e) => {
+    if (budgetTitle === "" || cost === "") return;
     e.preventDefault();
     const newBudget = {
       id: Date.now(),
@@ -28,6 +38,10 @@ export default function Calculation() {
     setBudgets((prev) => [...prev, newBudget]);
     setBudgetTitle("");
     setCost(0);
+
+    toast.success("아이템이 생성되었습니다.", {
+      position: "top-right",
+    });
   };
   const handleEditBudgetClick = (id) => {
     setIsEdit({ budgetId: id, flag: true });
@@ -56,6 +70,10 @@ export default function Calculation() {
     setIsEdit({ budgetId: null, flag: false });
     setCost(0);
     setBudgetTitle("");
+
+    toast.success("아이템이 수정되었습니다.", {
+      position: "top-right",
+    });
   };
 
   const handleBudgetTitleChange = (e) => {
@@ -141,6 +159,7 @@ export default function Calculation() {
           총 지출: {`${calcTotalExpens()}원`}
         </h2>
       </footer>
+      <ToastContainer />
     </>
   );
 }
