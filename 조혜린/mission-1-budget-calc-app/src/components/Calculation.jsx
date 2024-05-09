@@ -3,7 +3,26 @@ import { MdEdit, MdDeleteForever } from "react-icons/md";
 
 import styles from "./Calculation.module.css";
 
+import { useState } from "react";
+
 export default function Calculation() {
+  const [budgets, setBudgets] = useState([
+    {
+      id: 1,
+      title: "식비",
+      cost: "10000",
+    },
+    {
+      id: 2,
+      title: "간식비",
+      cost: "2400",
+    },
+  ]);
+
+  const handleDelBudgetItemClick = (id) => {
+    setBudgets((prev) => [...prev.filter((data) => data.id !== id)]);
+  };
+
   return (
     <>
       <header>
@@ -23,22 +42,19 @@ export default function Calculation() {
         </form>
         <div>
           <ul className={styles.budgets}>
-            <li>
-              <span className={styles.budgetTitle}>식비</span>
-              <span className={styles.budgetCost}>1000</span>
-              <div className={styles.budgetBtns}>
-                <MdEdit className={styles.editBtn} />
-                <MdDeleteForever className={styles.delBtn} />
-              </div>
-            </li>
-            <li>
-              <span className={styles.budgetTitle}>교통비</span>
-              <span className={styles.budgetCost}>1000</span>
-              <div className={styles.budgetBtns}>
-                <MdEdit className={styles.editBtn} />
-                <MdDeleteForever className={styles.delBtn} />
-              </div>
-            </li>
+            {budgets.map((budget) => (
+              <li key={budget.id}>
+                <span className={styles.budgetTitle}>{budget.title}</span>
+                <span className={styles.budgetCost}>{budget.cost}</span>
+                <div className={styles.budgetBtns}>
+                  <MdEdit className={styles.editBtn} />
+                  <MdDeleteForever
+                    className={styles.delBtn}
+                    onClick={() => handleDelBudgetItemClick(budget.id)}
+                  />
+                </div>
+              </li>
+            ))}
           </ul>
           <button className={`${styles.btn} ${styles.listDelBtn}`}>
             목록 지우기 <MdDeleteForever />
