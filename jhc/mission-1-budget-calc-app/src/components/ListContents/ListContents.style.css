@@ -1,0 +1,33 @@
+.contents-area{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.contents-box{
+    position: relative;
+    margin: 5px 0px;
+    padding: 10px 20px;
+    border: 2px solid gainsboro;
+
+    display: flex;
+    /* justify-content: space-between; */
+}
+
+.contents-name{
+    width: 60%;
+    color: black;
+    font-weight: bold;
+}
+
+.contents-cost{
+    width: 35%;
+    color: gray;
+}
+
+.icon-box{
+    position: absolute;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
