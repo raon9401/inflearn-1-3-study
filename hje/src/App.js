@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 import style from "./App.module.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import BudgetForm from "./components/BudgetForm/BudgetForm";
+import BudgetEdit from "./components/BudgetEdit/BudgetEdit";
+import BudgetItem from "./components/BudgetItem/BudgetItem";
 
 function App() {
   const [amountForm, setAmountForm] = useState({
@@ -20,36 +25,57 @@ function App() {
   }, []);
 
   useEffect(() => {
-    let total = 0;
-    budgetList.map((data) => (total += Number(data.amount)));
+    const total = budgetList.reduce(
+      (acc, budget) => acc + Number(budget.amount),
+      0
+    );
     setTotalAmount(total);
   }, [budgetList]);
 
   function handleChangeAmountInput(event) {
     setAmountForm({
       ...amountForm,
-      id: budgetList.length + "" + Math.floor(Math.random() * 100 + 10),
+      id:
+        Date.now() +
+        "" +
+        budgetList.length +
+        "" +
+        Math.floor(Math.random() * 100 + 10),
       [event.target.name]: event.target.value,
     });
   }
 
   function addBudget(event) {
     event.preventDefault();
+
+    if (amountForm.item === "") {
+      return toast.error("지출 항목을 입력해주세요.");
+    }
+    if (amountForm.amount === "") {
+      return toast.error("금액을 입력해주세요.");
+    }
+
     const newList = [...budgetList, amountForm];
     setAmountForm({ id: "", item: "", amount: "" });
     setbudgetList(newList);
     localStorage.setItem("budgetList", JSON.stringify(newList));
+    toast.success("추가 되었습니다.");
   }
 
   function deleteBudget(id) {
     const newList = budgetList.filter((budget) => budget.id !== id);
     setbudgetList(newList);
     localStorage.setItem("budgetList", JSON.stringify(newList));
+    toast.success("삭제 되었습니다.");
   }
 
   function deleteAll() {
+    if (budgetList.length === 0) {
+      return toast.error("내용이 없습니다.");
+    }
     setbudgetList([]);
     localStorage.setItem("budgetList", JSON.stringify([]));
+    toast.success("삭제 되었습니다.");
   }
 
   function handleChangeEditInput(event) {
@@ -65,6 +91,7 @@ function App() {
     setbudgetList(newList);
     setEditId(-1);
     localStorage.setItem("budgetList", JSON.stringify(newList));
+    toast.success("수정 되었습니다.");
   }
 
   function editCancle() {
@@ -74,100 +101,41 @@ function App() {
   return (
     <div className={style.App}>
       <h1 className={style.mainTitle}>예산 계산기</h1>
-      <form onSubmit={(event) => addBudget(event)}>
-        <div className={style.budgetFormBox}>
-          <div className={style.budgetFormBoxItem}>
-            <label>지출 항목</label>
-            <input
-              type="text"
-              name="item"
-              value={amountForm.item}
-              onChange={(event) => handleChangeAmountInput(event)}
-            />
-          </div>
-          <div className={style.budgetFormBoxItem}>
-            <label>비용</label>
-            <input
-              type="number"
-              name="amount"
-              className={style.amount}
-              value={amountForm.amount}
-              onChange={(event) => handleChangeAmountInput(event)}
-            />
-          </div>
-        </div>
-        <input type="submit" value="제출" className={style.submitButton} />
-      </form>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={true}
+      />
+      <BudgetForm
+        amountForm={amountForm}
+        handleChangeAmountInput={handleChangeAmountInput}
+        addBudget={addBudget}
+      />
       {budgetList && (
         <div className={style.budgetList}>
           {budgetList.map((budget) => (
             <div className={style.budget} key={budget.id}>
               {editId === budget.id ? (
-                <div className={style.budgetInner}>
-                  <div className={style.budgetFormBoxItem}>
-                    <input
-                      type="text"
-                      name="item"
-                      value={editForm.item}
-                      onChange={(event) => handleChangeEditInput(event)}
-                    />
-                  </div>
-                  <div className={style.budgetFormBoxItem}>
-                    <input
-                      type="number"
-                      name="amount"
-                      className={style.amount}
-                      value={editForm.amount}
-                      onChange={(event) => handleChangeEditInput(event)}
-                    />
-                  </div>
-
-                  <div className={style.buttons}>
-                    <button
-                      className="edit_button"
-                      onClick={() => editBudget(editForm.id)}
-                    >
-                      완료
-                    </button>
-                    <button className="delete_button" onClick={editCancle}>
-                      취소
-                    </button>
-                  </div>
-                </div>
+                <BudgetEdit
+                  editForm={editForm}
+                  handleChangeEditInput={handleChangeEditInput}
+                  editBudget={editBudget}
+                  editCancle={editCancle}
+                />
               ) : (
-                <div className={style.budgetInner}>
-                  <p>{budget.item}</p>
-                  <p className={style.amount}>{budget.amount}</p>
-
-                  <div className={style.buttons}>
-                    <button
-                      className="edit_button"
-                      onClick={() => {
-                        setEditId(budget.id);
-                        setEditForm({
-                          id: budget.id,
-                          item: budget.item,
-                          amount: budget.amount,
-                        });
-                      }}
-                    >
-                      수정
-                    </button>
-                    <button
-                      className="delete_button"
-                      onClick={() => deleteBudget(budget.id)}
-                    >
-                      삭제
-                    </button>
-                  </div>
-                </div>
+                <BudgetItem
+                  data={budget}
+                  setEditId={setEditId}
+                  setEditForm={setEditForm}
+                  deleteBudget={deleteBudget}
+                />
               )}
             </div>
           ))}
         </div>
       )}
       <div className={style.totalAmount}>
-        <button class={style.deleteAllButton} onClick={deleteAll}>
+        <button className={style.deleteAllButton} onClick={deleteAll}>
           전체 삭제
         </button>
         <p>
