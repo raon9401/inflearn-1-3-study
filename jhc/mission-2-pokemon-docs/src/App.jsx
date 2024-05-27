@@ -14,7 +14,6 @@ function App() {
           <Route path=":id" element={<DetailPage />} />
         </Route>
       </Route>
-
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

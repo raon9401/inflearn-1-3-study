@@ -14,7 +14,7 @@ export const HomePage = () => {
     offset,
   });
   handleApiState(isLoading, isError, error);
-  console.log(data);
+
   const handleMoreContents = () => {
     setOffset(offset + 40);
   };
