@@ -1,0 +1,21 @@
+.pokemon_box {
+  cursor: pointer;
+  background-color: #fff;
+  padding: 20px 16px 16px;
+  border: solid 2px #21414f;
+  box-shadow: 6px 6px 0px #21414f;
+}
+
+.img {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.img img {
+  height: 80px;
+}
+
+.pokemon_name {
+  padding-top: 4px;
+  font-size: 18px;
+}
