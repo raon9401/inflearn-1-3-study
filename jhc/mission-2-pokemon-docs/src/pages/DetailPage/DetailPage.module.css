@@ -1,0 +1,81 @@
+.detailArea {
+  position: relative;
+  padding-top: 50px;
+  width: 100%;
+  height: calc(100vh - 50px);
+
+  display: flex;
+  justify-content: center;
+
+  color: white;
+}
+
+.backgroundBox {
+  width: 90%;
+  height: 120vh;
+}
+
+.colorBox {
+  width: 100%;
+  height: 30%;
+}
+
+.infoColorBox {
+  width: 100%;
+  height: 70%;
+  background-color: #001c36;
+}
+
+.infoBox {
+  position: absolute;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.baseInfoBox {
+  width: 100%;
+  margin-top: 20px;
+  font-size: 1.4rem;
+
+  display: flex;
+  justify-content: space-around;
+}
+
+.baseImg {
+  max-width: 400px;
+}
+
+.nameBox {
+  min-width: 150px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  cursor: pointer;
+}
+
+.idBox {
+  min-width: 150px;
+  text-align: center;
+}
+
+.typeText {
+  border-radius: 50px;
+  padding: 5px 20px;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #001c36;
+
+  cursor: pointer;
+}
+
+.detailInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

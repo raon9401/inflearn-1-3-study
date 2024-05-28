@@ -1,0 +1,50 @@
+.sizeInfo{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.infoArea{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+}
+
+.infoWrap{
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.infoWrap > h2{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.abilityWrap{
+    text-align: center;
+}
+
+/* 디테일 페이지 이동 화살표 Area */
+.pageMoveArrowArea{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    /* background-color: black; */
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.arrowButton{
+    cursor: pointer;
+}

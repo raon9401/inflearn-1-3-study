@@ -1,0 +1,15 @@
+.listWrap{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.listMoreButton{
+    cursor: pointer;;
+    margin: 20px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #001c36;
+    color: white;
+}
