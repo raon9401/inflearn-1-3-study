@@ -41,7 +41,7 @@ export const DetailPage = () => {
                 className={style.baseImg}
                 src={data?.sprites.other["official-artwork"].front_default}
               />
-              <span>#{data?.id}</span>
+              <span className={style.idBox}>#{data?.id}</span>
             </div>
             <div className={style.detailInfo}>
               <span
